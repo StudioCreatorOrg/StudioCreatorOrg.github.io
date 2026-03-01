@@ -1,0 +1,13 @@
+{
+  "fetchedAt": "2026-03-01T00:00:00Z",
+  "roomId": "327347949182124365",
+  "events": [
+    {
+      "Name": "Test Event",
+      "StartTime": "2026-03-28T22:00:00Z",
+      "EndTime": "2026-03-29T00:00:00Z",
+      "AttendeeCount": 15,
+      "PlayerEventId": 123456
+    }
+  ]
+}
