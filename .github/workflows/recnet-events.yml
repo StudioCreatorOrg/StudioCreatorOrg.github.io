@@ -3,10 +3,14 @@ name: Update RecNet events JSON
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"  # every 30 minutes (adjust if you want)
+    - cron: "0 * * * *" # every hour
 
 permissions:
   contents: write
+
+concurrency:
+  group: recnet-events
+  cancel-in-progress: true
 
 jobs:
   update:
@@ -14,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -25,10 +31,19 @@ jobs:
           RECNET_ROOM_ID: "327347949182124365"
         run: node scripts/fetch-recnet-events.mjs
 
-      - name: Commit changes (if any)
+      - name: Commit & push if changed
         run: |
-          git config user.name "recnet-bot"
-          git config user.email "recnet-bot@users.noreply.github.com"
+          git config user.name "recnet-events-bot"
+          git config user.email "recnet-events-bot@users.noreply.github.com"
+
+          # stage outputs if they exist
           git add data/events.json data/events_error.json || true
-          git commit -m "Update events.json" || exit 0
+
+          # if nothing staged, exit cleanly
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update RecNet events.json"
           git push

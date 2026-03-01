@@ -47,6 +47,8 @@
         <p>&copy; 2024 SCO Products. All rights reserved.</p>
 </body>
 
+<div id="recnet-events"></div>
+
 <script>
 (async () => {
   const ROOT = document.getElementById("recnet-events");
@@ -73,7 +75,7 @@
       name: e.Name ?? "",
       start: e.StartTime ?? null,
       end: e.EndTime ?? null,
-      attending: typeof e.AttendeeCount === "number" ? e.AttendeeCount : null,
+      attending: typeof e.AttendeeCount === "number" ? e.AttendeeCount : null
     })).filter(e => e.name && e.start);
   }
 
@@ -82,6 +84,8 @@
     const res = await fetch("./data/events.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`Failed to load data/events.json (HTTP ${res.status})`);
     const payload = await res.json();
+
+    if (!payload.ok) throw new Error("events.json indicates fetch failure.");
 
     const events = normalize(payload.events)
       .filter(e => new Date(e.start).getTime() >= Date.now())
