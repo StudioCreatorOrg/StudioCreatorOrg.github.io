@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCO/Events</title>
+</head>
+<body>
+    <nav>
+        <img src="lib/Logos/SCO.png" alt="Logo" width="75" height="75">
+        <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="Products.html">Products</a></li>
+            <li><a href="Events.html">Events</a></li>
+            <li><a href="About.html">About Us</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+        </ul>
+        <button class="menu-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"/></svg></button>
+    </nav>
+
+    <main>
+        <h1>Events</h1>
+        <p>Discover our exciting lineup of events designed to inspire, educate, and connect. From workshops, conferences, product launches, Theater productions, and more, we have something for everyone.</p>
+
+        <section>
+            <h2>Upcoming Events</h2>
+
+        <div class="event-grid">
+            <div class="event-card">
+                <h3>Event Title</h3>
+                <img src="lib/Images/Component 1.png" alt="Event 1">
+                <p>Mar 28, 10:00PM - 12:00AM</p>
+                <p>Atending 0</p>
+                <a href="https://rec.net/event/2203972782803911382" class="btn">Learn More</a>
+            </div>
+            <div class="event-card">
+                <div id="recnet-events"></div>
+                <a href="https://rec.net/event/2203972782803911382" class="btn">Learn More</a>
+        </div>
+
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 SCO Products. All rights reserved.</p>
+</body>
+
+<script>
+(async () => {
+  const ROOT = document.getElementById("recnet-events");
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[c]));
+  }
+
+  function formatLocal(iso) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return new Intl.DateTimeFormat(undefined, {
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit"
+    }).format(d);
+  }
+
+  function normalize(events) {
+    if (!Array.isArray(events)) return [];
+    return events.map(e => ({
+      id: e.PlayerEventId ?? null,
+      name: e.Name ?? "",
+      start: e.StartTime ?? null,
+      end: e.EndTime ?? null,
+      attending: typeof e.AttendeeCount === "number" ? e.AttendeeCount : null,
+    })).filter(e => e.name && e.start);
+  }
+
+  try {
+    ROOT.textContent = "Loading events…";
+    const res = await fetch("./data/events.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to load data/events.json (HTTP ${res.status})`);
+    const payload = await res.json();
+
+    const events = normalize(payload.events)
+      .filter(e => new Date(e.start).getTime() >= Date.now())
+      .sort((a,b) => new Date(a.start) - new Date(b.start))
+      .slice(0, 10);
+
+    if (!events.length) {
+      ROOT.textContent = "No upcoming events.";
+      return;
+    }
+
+    ROOT.innerHTML = `
+      <div style="display:grid;gap:10px;font-family:system-ui,Segoe UI,Arial;">
+        ${events.map(ev => `
+          <div style="border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px;">
+            <div style="font-weight:750;">${escapeHtml(ev.name)}</div>
+            <div style="opacity:.9;margin-top:6px;display:grid;gap:2px;">
+              <div><b>Starts:</b> ${escapeHtml(formatLocal(ev.start))}</div>
+              ${ev.end ? `<div><b>Ends:</b> ${escapeHtml(formatLocal(ev.end))}</div>` : ``}
+              <div><b>Attending:</b> ${ev.attending ?? "—"}</div>
+            </div>
+          </div>
+        `).join("")}
+        <div style="opacity:.7;font-size:12px;">Last updated: ${escapeHtml(payload.fetchedAt || "")}</div>
+      </div>
+    `;
+  } catch (err) {
+    console.error(err);
+    ROOT.innerHTML = `<div>Failed to load events. ${escapeHtml(err.message || String(err))}</div>`;
+  }
+})();
+</script>
+</html>
