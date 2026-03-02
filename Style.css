@@ -1,5 +1,5 @@
 html, body {
-  background: content-box linear-gradient(45deg, #00a2ff, #005e94); color: var(--text);
+  background: content-box linear-gradient(45deg, #0fa7ff, #0083cf); color: var(--text);
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
     min-height: 100vh;
     margin: 0;
@@ -58,9 +58,12 @@ li {
 nav {
     display: flex;
     align-items: center;
-    background-color: #00a2ff5c;
+    align-self: center;
+    background-color: #00a2ff84;
     padding: 10px 20px;
     justify-content: space-between;
+    align-items: center;
+    width: 90%
 }
 
 nav img {
@@ -79,9 +82,16 @@ nav ul li {
 }
 
 nav a {
+    background-color: transparent;
     color: white;
     text-decoration: none;
     font-size: max(20px);
+    transition: 0.2s;
+}
+
+nav a:hover {
+    color: #1facff;
+    transition: 0.2s;
 }
 
 section {
@@ -180,7 +190,7 @@ section {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #1a88c7;
+    background-color: #1a88c778;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -192,17 +202,50 @@ section {
 .btn:hover {
     background-color: #0f8cd4;
     transition: 0.2s;
+    transform: translateY(-3px);
 }
 
 .btn-contact {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #1facff;
+    background-color: #1a88c778;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
     margin-top: 20px;
+    transition: 0.2s;
+}
+
+.btn-contact:hover {
+    background-color: #0f8cd4;
+    transition: 0.2s;
+    transform: translateY(-3px);
+}
+
+.btn-soc {
+    display: inline-block;
+    padding: 0px 5px;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.btn-soc ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.btn-soc:hover {
+    background-color: transparent;
+    color: #1facff;
+    transform: translateY(-5px);
     transition: 0.2s;
 }
 
@@ -254,7 +297,7 @@ section {
     margin-top: auto;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 760px) {
     nav ul {
         display: none;
     }
@@ -265,7 +308,7 @@ section {
 
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 761px) {
     .menu-btn {
         display: none;
     }
@@ -283,6 +326,7 @@ section {
     color: #1facff;
     border: none;
     justify-items: center;
+    display: none;
 }
 
 .menu-btn:hover {

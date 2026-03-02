@@ -4,8 +4,7 @@ import crypto from "node:crypto";
 const ROOM_ID = process.env.RECNET_ROOM_ID || "327347949182124365";
 const OUT_FILE = "data/events.json";
 const ERROR_FILE = "data/events_error.json";
-
-const EVENTS_URL = `https://api.rec.net/api/playerevents/v1/room/${encodeURIComponent(ROOM_ID)}`;
+const EVENTS_URL = `https://rec.net/api/playerevents/v1/room/${ROOM_ID}`;
 
 async function readJson(path) {
   try {
