@@ -15,23 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!btn || !menu) return;
 
   btn.addEventListener('click', (e) => {
-    e.stopPropagation();                // prevent immediate outside-click close
+    e.stopPropagation();
     menu.classList.toggle('is-open');
   });
 
-  // close when clicking a link inside menu
   menu.addEventListener('click', (e) => {
     if (e.target.closest('a')) menu.classList.remove('is-open');
   });
 
-  // close when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.menu') && !e.target.closest('.menu-btn')) {
       menu.classList.remove('is-open');
     }
   });
 
-  // close on resize to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 761) menu.classList.remove('is-open');
   });
