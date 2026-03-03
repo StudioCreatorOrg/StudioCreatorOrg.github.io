@@ -4,9 +4,47 @@
     <link rel="stylesheet" href="Style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCO</title>
+    <title>SCO Theater Productions</title>
+    <link rel="icon" type="image/png" href="lib/Logos/SCO Theater.png">
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.menu-btn');
+  const menu = document.querySelector('.menu');
+
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();                // prevent immediate outside-click close
+    menu.classList.toggle('is-open');
+  });
+
+  // close when clicking a link inside menu
+  menu.addEventListener('click', (e) => {
+    if (e.target.closest('a')) menu.classList.remove('is-open');
+  });
+
+  // close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.menu') && !e.target.closest('.menu-btn')) {
+      menu.classList.remove('is-open');
+    }
+  });
+
+  // close on resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 761) menu.classList.remove('is-open');
+  });
+});
+</script>
 <body>
+    <div class="menu"> <img src="lib/Logos/SCO_Theatre.png" alt="Logo" width="75" height="75"> <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Events.html">Events</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+    </ul></div>
+    <section class="Top">
     <nav>
         <img src="lib/Logos/SCO_Theatre.png" alt="Logo" width="75" height="75">
         <ul>
@@ -15,20 +53,22 @@
             <li><a href="About.html">About Us</a></li>
             <li><a href="Contact.html">Contact</a></li>
         </ul>
-        <button class="menu-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"/></svg></button>
+        <div class="menu-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"/></svg></div>
     </nav>
+
 
     <main>
         <h1>Welcome to SCO Theater Production</h1>
-        <p>Discover our range of high-quality events and designed to push the boundaries. We have something for everyone.</p>
+        <p>SCO Theater Production is a non-equity theatre company dedicated to creating exceptional theatrical experiences. We are passionate about bringing compelling stories to life on stage and fostering a vibrant community of artists and theater enthusiasts.</p>
+        <p>Our productions are known for their creativity, innovation, and commitment to excellence. We strive to create a welcoming and inclusive environment where artists can thrive and audiences can be captivated by the magic of live theater.</p>
         <h2>Follow Us on Social Media:</h2>
        <center> <a href="https://www.tiktok.com/@scotheatreproductions?_r=1&_t=ZN-94D1LMVOd98" class="btn-soc"> <img src="lib/Logos/TikTok_logo.png" alt="TikTok Logo" width="40" height="45"></a><a href="https://discord.gg/TfsWUN5mEh" class="btn-soc"> <img src="lib/Logos/Discord_logo.png" alt="Discord Logo" width="40" height="40"></a></center>
-    </div>
+</section>
 
     <section>
         <h2>About Us</h2>
-        <p>At SCO Products, we are committed to providing our customers with the best products and services. Our team is dedicated to ensuring your satisfaction and delivering exceptional value.</p>
-        <p>We also make alot of high quality events and try to push the limits of creation in rec room and other platforms.</p>
+        <p>At SCO Theater Production, we are more than just a non-equity theatre company — we are a collective of artists driven by passion, creativity, and a shared love of performance. Here, actors, directors, designers, writers, and theatre enthusiasts come together to create meaningful, engaging, and unforgettable productions.</p>
+        <p>Our mission is simple: to provide a space where talent is nurtured, new ideas are explored, and artistry is celebrated. Whether you’re stepping onto the stage for the first time or bringing years of experience, SCO Theater Production values commitment, collaboration, and a deep respect for the craft.</p>
     </section>
 
     <section>
@@ -38,7 +78,7 @@
                 <h3>HAMILTON Act 1 | SCO Theater Production</h3>
                 <img src="lib/Images/SCO_2.png" alt="Event 1">
                 <p>Mar 28, 10:00PM - 12:00AM [GMT+2]</p>
-                <p>Atending 62+</p>
+                <p>Atending 66+</p>
                 <a href="https://rec.net/event/2203972782803911382" class="btn">Learn More</a>
             </div>
         </div>
